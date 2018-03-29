@@ -687,7 +687,9 @@ static void ril_voicecall_answer(struct ofono_voicecall *vc,
 {
 	/* Send request to RIL */
 	DBG("Answering current call");
-	ril_voicecall_request(RIL_REQUEST_ANSWER, vc, NULL, cb, data);
+	GRilIoRequest *req = grilio_request_array_int32_new(2, 1, 0);
+	ril_voicecall_request(RIL_REQUEST_ANSWER, vc, req, cb, data);
+	grilio_request_unref(req);
 }
 
 static void ril_voicecall_send_dtmf_cb(GRilIoChannel *io, int status,
